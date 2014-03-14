@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+
+// Analysis disable CheckNamespace
 
 public class Hand : MonoBehaviour 
 {
@@ -13,18 +14,18 @@ public class Hand : MonoBehaviour
 	
 	void Update () 
 	{
-		bool grabbing = this.gameObject.name == "LeftHand" ? Player.GripLeftArm : Player.GripRightArm;
+		bool grabbing = gameObject.name == "LeftHand" ? Astronaut.GripLeftArm : Astronaut.GripRightArm;
 		
 		if(grabbing)
 		{
 			if(isTouching)
 			{
-				this.rigidbody2D.isKinematic = true;
+				rigidbody2D.isKinematic = true;
 			}
 		}
 		else
 		{
-			this.rigidbody2D.isKinematic = false;
+			rigidbody2D.isKinematic = false;
 		}
 	}
 	
@@ -41,7 +42,7 @@ public class Hand : MonoBehaviour
 	
 	void OnCollisionExit2D(Collision2D collisionInfo) 
 	{
-		if(collisionInfo.transform != this.transform.parent)
+		if(collisionInfo.transform != transform.parent)
 			isTouching = false;
 	}
 }
