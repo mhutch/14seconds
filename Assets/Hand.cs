@@ -13,8 +13,7 @@ public class Hand : MonoBehaviour
 	
 	void Update () 
 	{
-		bool grabbing = this.gameObject.name == "LeftHand" ? 
-			InputInterpreter.ArmGripLeft : InputInterpreter.ArmGripRight;
+		bool grabbing = this.gameObject.name == "LeftHand" ? Player.GripLeftArm : Player.GripRightArm;
 		
 		if(grabbing)
 		{

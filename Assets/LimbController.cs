@@ -26,25 +26,25 @@ public class LimbController : MonoBehaviour
 			Vector2.Lerp(
 				new Vector2(-footOffStr.x, footOffStr.y), 
 				new Vector2(-footOffEnd.x, footOffEnd.y), 
-				InputInterpreter.LegStretchLeft);
+				Player.StretchLeftLeg);
 		
 		rightFoot.GetComponent<SpringJoint2D>().connectedAnchor = 
 			Vector2.Lerp(
 				new Vector2(footOffStr.x, footOffStr.y), 
 				new Vector2(footOffEnd.x, footOffEnd.y), 
-				InputInterpreter.LegStretchLeft);
+				Player.StretchRightLeg);
 				
 		leftHand.GetComponent<SpringJoint2D>().connectedAnchor = 
 			Vector2.Lerp(
 				new Vector2(-handOffStr.x, handOffStr.y), 
 				new Vector2(-handOffEnd.x, handOffEnd.y), 
-				InputInterpreter.ArmStretchLeft);
+				Player.StretchLeftArm);
 		
 		rightHand.GetComponent<SpringJoint2D>().connectedAnchor = 
 			Vector2.Lerp(
 				new Vector2(handOffStr.x, handOffStr.y), 
 				new Vector2(handOffEnd.x, handOffEnd.y), 
-				InputInterpreter.ArmStretchRight);
+				Player.StretchRightArm);
 				
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
