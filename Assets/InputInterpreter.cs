@@ -42,8 +42,7 @@ public class InputInterpreter : MonoBehaviour
 	{
 		Player.RemoveOxygen (Time.deltaTime);
 
-		if (Player.OxygenTime < 0 && Random.Range (0f, 10f) < (- Player.OxygenTime / 2f) * Time.deltaTime)
-			AddDisconnect ();
+		AddDisconnects ();
 
 		if (!disconnects.Any (d => d.StealInput ()))
 			HandleInput ();
@@ -63,9 +62,19 @@ public class InputInterpreter : MonoBehaviour
 		UpdateStretch (Limb.RightLeg);
 	}
 
-	void AddDisconnect ()
+	void AddDisconnects ()
 	{
+		//glitches only start when time runs out
+		if (Player.OxygenTime > 0)
+			return;
+
+		//only allow 1 at once
 		if (disconnects.Count > 1)
+			return;
+
+		//glitch probability linearly scaled to 100% at 240 seconds
+		var glitchChance = (-Player.OxygenTime / 240f) * Time.deltaTime;
+		if (Random.Range (0f, 1f) > glitchChance)
 			return;
 
 		var d = RandomSpasm ();
