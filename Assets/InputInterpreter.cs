@@ -13,7 +13,7 @@ public class InputInterpreter : MonoBehaviour
 	
 	// constants
 	const float StartOxygenTime = 14f; //seconds
-	const float StretchSpeed = 1f; // units per second
+	const float StretchSpeed = 2f; // units per second
 	const float StretchOxygenUse = 0.5f; // oxygen seconds per stretch second
 	
 	//arm/leg state
