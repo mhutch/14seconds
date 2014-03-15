@@ -15,14 +15,16 @@ class InputSet
 	public bool ArmRightGrip { get; set; }
 	public bool LegStretchRight { get; set; }
 
-	public void Read ()
+	public static InputSet Read ()
 	{
-		ArmStretchLeft = Input.GetKey (KeyCode.F);
-		ArmLeftGrip = Input.GetKey (KeyCode.D);
-		LegStretchLeft = Input.GetKey (KeyCode.V);
-		ArmStretchRight = Input.GetKey (KeyCode.J);
-		ArmRightGrip = Input.GetKey (KeyCode.K);
-		LegStretchRight = Input.GetKey (KeyCode.N);
+		return new InputSet {
+			ArmStretchLeft = Input.GetKey (KeyCode.F),
+			ArmLeftGrip = Input.GetKey (KeyCode.D),
+			LegStretchLeft = Input.GetKey (KeyCode.V),
+			ArmStretchRight = Input.GetKey (KeyCode.J),
+			ArmRightGrip = Input.GetKey (KeyCode.K),
+			LegStretchRight = Input.GetKey (KeyCode.N)
+		};
 	}
 
 	public bool GetStretch (Limb limb)

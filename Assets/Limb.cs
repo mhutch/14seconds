@@ -1,7 +1,5 @@
-using UnityEngine;
 using System;
-using Random = UnityEngine.Random;
-using System.Collections.Generic;
+using R = UnityEngine.Random;
 
 // Analysis disable CheckNamespace
 
@@ -16,4 +14,21 @@ enum Limb
 	RightArm = Right | Arm,
 	LeftLeg = Left | Leg,
 	RightLeg = Right | Leg,
+}
+
+static class LimbHelper
+{
+	public static Limb Random ()
+	{
+		switch (R.Range (0, 4)) {
+		case 0:
+			return Limb.LeftArm;
+		case 1:
+			return Limb.LeftLeg;
+		case 2:
+			return Limb.RightArm;
+		default:
+			return Limb.RightLeg;
+		}
+	}
 }

@@ -1,13 +1,24 @@
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
-using System.Collections.Generic;
-using System.Linq;
 
 // Analysis disable CheckNamespace
 
 static class Astronaut
 {
+	// constants
+	public const float StartOxygenTime = 14f; //seconds
+	public const float StartStretchSpeed = 2f; // units per second
+	public const float StretchOxygenUse = 0.5f; // oxygen seconds per stretch second
+
+	static Astronaut ()
+	{
+		OxygenTime = StartOxygenTime;
+		StretchSpeed = StartStretchSpeed;
+	}
+
+	public static float StretchSpeed { get; set; }
+
 	public static float OxygenTime { get; set; }
 
 	static float stretchLeftArm, stretchLeftLeg, stretchRightArm, stretchRightLeg;
@@ -109,5 +120,27 @@ static class Astronaut
 	public static void RemoveOxygen (float value)
 	{
 		OxygenTime -= value;
+	}
+
+	public static void Move (InputSet input, float scale)
+	{
+		UpdateGrip (input, Limb.LeftArm);
+		UpdateGrip (input, Limb.RightArm);
+		UpdateStretch (input, Limb.LeftArm, scale);
+		UpdateStretch (input, Limb.LeftLeg, scale);
+		UpdateStretch (input, Limb.RightArm, scale);
+		UpdateStretch (input, Limb.RightLeg, scale);
+	}
+
+	static void UpdateGrip (InputSet input, Limb limb)
+	{
+		SetGrip (limb, input.GetStretch (limb));
+	}
+
+	static void UpdateStretch (InputSet input, Limb limb, float scale)
+	{
+		var keyDown = input.GetStretch (limb);
+		var stretch = scale * StretchSpeed * Time.deltaTime;
+		RemoveOxygen (Astronaut.Stretch (limb, keyDown? stretch : -stretch));
 	}
 }

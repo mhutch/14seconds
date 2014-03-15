@@ -1,8 +1,9 @@
 using UnityEngine;
+using System;
 
 // Analysis disable CheckNamespace
 
-abstract class Disconnect
+abstract class Disconnect : IDisposable
 {
 	float length, remaining;
 
@@ -14,19 +15,25 @@ abstract class Disconnect
 	public float Length { get { return length; } }
 	public float Remaining { get { return remaining; } }
 
-	public bool CheckAndUpdate ()
+	public bool CheckAndUpdate (InputSet input)
 	{
 		remaining -= Time.deltaTime;
 		if (remaining < 0)
 			return false;
-		Update ();
+		Update (input);
 		return true;
 	}
 
-	protected abstract void Update ();
+	protected virtual void Update (InputSet input)
+	{
+	}
 
-	public virtual bool StealInput ()
+	public virtual bool StealInput (InputSet input)
 	{
 		return false;
+	}
+
+	public virtual void Dispose ()
+	{
 	}
 }

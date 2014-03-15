@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using R = UnityEngine.Random;
 
 // Analysis disable CheckNamespace
 
@@ -23,11 +24,11 @@ class Spasm : Disconnect
 	public SpasmType Type { get; set; }
 	public float Strength { get; private set; }
 
-	protected override void Update ()
+	protected override void Update (InputSet input)
 	{
 		switch (Type) {
 		case SpasmType.Push:
-			Astronaut.Stretch (Limb, (Strength + InputInterpreter.StretchSpeed) * Time.deltaTime);
+			Astronaut.Stretch (Limb, (Strength + Astronaut.StretchSpeed) * Time.deltaTime);
 			break;
 		case SpasmType.Pull:
 			Astronaut.Stretch (Limb, - Strength * Time.deltaTime);
@@ -39,6 +40,16 @@ class Spasm : Disconnect
 		default:
 			throw new ArgumentOutOfRangeException ();
 		}
+	}
+
+	public static Spasm Random ()
+	{
+		return new Spasm (
+			LimbHelper.Random (),
+			(SpasmType)R.Range (0, 3),
+			R.Range (4f, 10f),
+			0.2f
+		);
 	}
 
 	public override string ToString ()

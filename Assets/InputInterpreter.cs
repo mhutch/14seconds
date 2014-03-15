@@ -2,41 +2,15 @@
 using System;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
-using System.Linq;
 
 // Analysis disable CheckNamespace
 
 public class InputInterpreter : MonoBehaviour
 {
-	// constants
-	public const float StartOxygenTime = 14f; //seconds
-	public const float StretchSpeed = 2f; // units per second
-	public const float StretchOxygenUse = 0.5f; // oxygen seconds per stretch second
-
 	readonly List<Disconnect> disconnects = new List<Disconnect> ();
 	
 	void Start ()
 	{
-		Astronaut.OxygenTime = StartOxygenTime;
-	}
-	
-	static void UpdateGrip (Limb limb)
-	{
-		Astronaut.SetGrip (limb, Input.GetKey (Controls.GetGrip (limb)));
-	}
-	
-	static void UpdateStretch (Limb limb)
-	{
-		var value = Astronaut.GetStretch (limb);
-		var keyDown = Input.GetKey (Controls.GetStretch (limb));
-
-		if (keyDown) {
-			if (value < 1f)
-				Astronaut.RemoveOxygen (Astronaut.Stretch (limb, StretchSpeed * Time.deltaTime));
-		} else {
-			if (value > 0f)
-				Astronaut.RemoveOxygen (- Astronaut.Stretch (limb, - StretchSpeed * Time.deltaTime));
-		}
 	}
 	
 	void Update ()
@@ -45,22 +19,21 @@ public class InputInterpreter : MonoBehaviour
 
 		AddDisconnects ();
 
-		if (!disconnects.Any (d => d.StealInput ()))
-			HandleInput ();
+		var input = InputSet.Read ();
 
-		for (int i = 0; i < disconnects.Count; i++)
-			if (!disconnects [i].CheckAndUpdate ())
+		bool handleInput = true;
+		foreach (var d in disconnects)
+			handleInput &= !d.StealInput (input);
+
+		if (handleInput)
+			Astronaut.Move (input, 1f);
+
+		for (int i = 0; i < disconnects.Count; i++) {
+			if (!disconnects [i].CheckAndUpdate (input)) {
+				disconnects [i].Dispose ();
 				disconnects.RemoveAt (i--);
-	}
-
-	static void HandleInput ()
-	{
-		UpdateGrip (Limb.LeftArm);
-		UpdateGrip (Limb.RightArm);
-		UpdateStretch (Limb.LeftArm);
-		UpdateStretch (Limb.LeftLeg);
-		UpdateStretch (Limb.RightArm);
-		UpdateStretch (Limb.RightLeg);
+			}
+		}
 	}
 
 	void AddDisconnects ()
@@ -78,45 +51,19 @@ public class InputInterpreter : MonoBehaviour
 		if (Random.Range (0f, 1f) > glitchChance)
 			return;
 
-		var d = RandomSpasm ();
+		Disconnect d = RandomDisconnect ();
 		Debug.Log (d);
 		disconnects.Add (d);
 	}
 
-	static Spasm RandomSpasm ()
+	static Disconnect RandomDisconnect ()
 	{
-		return new Spasm (
-			RandomLimb (),
-			(SpasmType)Random.Range (0, 3),
-			Random.Range (4f, 10f),
-			0.2f
-		);
-	}
-
-	static Limb RandomLimb ()
-	{
-		switch (Random.Range (0, 4)) {
+		switch (Random.Range (0, 2)) {
 		case 0:
-			return Limb.LeftArm;
+			return Spasm.Random ();
 		case 1:
-			return Limb.LeftLeg;
-		case 2:
-			return Limb.RightArm;
-		default:
-			return Limb.RightLeg;
+			return Slowdown.Random ();
 		}
+		throw new Exception ();
 	}
-}
-
-[Flags]
-enum Limb
-{
-	Leg = 1,
-	Arm = 1 << 1,
-	Left = 1 << 2,
-	Right = 1 << 3,
-	LeftArm = Left | Arm,
-	RightArm = Right | Arm,
-	LeftLeg = Left | Leg,
-	RightLeg = Right | Leg,
 }
