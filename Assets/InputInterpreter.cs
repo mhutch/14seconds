@@ -70,7 +70,7 @@ public class InputInterpreter : MonoBehaviour
 
 	static Disconnect RandomDisconnect ()
 	{
-		switch (Random.Range (0, 2)) {
+		switch (Random.Range (0, 3)) {
 		case 0:
 			return Spasm.Random ();
 		case 1:
