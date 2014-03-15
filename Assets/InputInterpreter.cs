@@ -4,11 +4,13 @@ using Random = UnityEngine.Random;
 using System.Collections.Generic;
 
 // Analysis disable CheckNamespace
+using System.Linq;
 
 public class InputInterpreter : MonoBehaviour
 {
 	readonly List<Disconnect> disconnects = new List<Disconnect> ();
-	
+	bool displayConsole;
+
 	void Start ()
 	{
 	}
@@ -33,6 +35,10 @@ public class InputInterpreter : MonoBehaviour
 				disconnects [i].Dispose ();
 				disconnects.RemoveAt (i--);
 			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.BackQuote)) {
+			displayConsole = !displayConsole;
 		}
 
 		//allow for reset
@@ -78,5 +84,11 @@ public class InputInterpreter : MonoBehaviour
 	void OnGUI ()
 	{
 		GUI.Label (new Rect (20, 20, 300, 50), string.Format ("Oxygen: {0:F2}", Astronaut.OxygenTime));
+
+		if (displayConsole) {
+			string blinkText = string.Join ("\n", disconnects.Select (s => s.ToString ()).ToArray ());
+			if (!string.IsNullOrEmpty (blinkText))
+				GUI.Label (new Rect (20, 70, 300, 500), blinkText);
+		}
 	}
 }
