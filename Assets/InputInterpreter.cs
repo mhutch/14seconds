@@ -88,7 +88,13 @@ public class InputInterpreter : MonoBehaviour
 
 	void OnGUI ()
 	{
-		GUI.Label (new Rect (20, 20, 300, 50), string.Format ("Oxygen: {0:F2}", Astronaut.OxygenTime));
+		string label;
+		if (Astronaut.OxygenTime > 0) {
+			label = string.Format ("Oxygen: {0:F2}", Astronaut.OxygenTime);
+		} else {
+			label = string.Format ("Suffocation: {0:F2}", -Astronaut.OxygenTime);
+		}
+		GUI.Label (new Rect (20, 20, 400, 50), label);
 
 		if (displayConsole) {
 			string blinkText = string.Join ("\n", disconnects.Select (s => s.ToString ()).ToArray ());
