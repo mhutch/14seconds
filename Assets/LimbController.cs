@@ -35,13 +35,13 @@ public class LimbController : MonoBehaviour
 		
 		rightHandPivot = new GameObject("RightHandGrabHelper");
 		rightHandPivot.transform.parent = this.transform;
-		rightHandPivot.transform.position = leftHand.transform.position;
+		rightHandPivot.transform.position = rightHand.transform.position;
 		rightHandPivot.transform.rotation = this.transform.rotation;
 	}
 	
 	void Start () 
 	{
-		
+		rigidbody2D.AddForce((Vector3.up + Vector3.right) * 5000f);
 	}
 	
 	void Update () 
@@ -76,7 +76,7 @@ public class LimbController : MonoBehaviour
 		leftHand.GetComponent<SpringJoint2D>().connectedAnchor = 
 			Vector2.Lerp(
 				new Vector2(-handOffStr.x, handOffStr.y), 
-				new Vector2(-leftHandTarget.x, leftHandTarget.y), 
+				new Vector2(leftHandTarget.x, leftHandTarget.y), 
 				Astronaut.StretchLeftArm);
 		
 		rightHand.GetComponent<SpringJoint2D>().connectedAnchor = 
@@ -149,13 +149,16 @@ public class LimbController : MonoBehaviour
 			return distantPoint;
 		}
 		else
-			return handOffEndDefault;
+		{
+			if(left) return new Vector2(-handOffEndDefault.x, handOffEndDefault.y);
+			else return handOffEndDefault;
+		}
 	}
 	
 	void OnDrawGizmos()
 	{
 		/*
-		Vector2 pos = this.transform.TransformPoint(ClosestGrabFromHand(rightHand));
+		Vector2 pos = this.transform.TransformPoint(ClosestGrabFromHand(leftHand));
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(pos, 0.5f);
 		*/
