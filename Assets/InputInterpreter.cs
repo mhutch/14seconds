@@ -44,7 +44,7 @@ public class InputInterpreter : MonoBehaviour
 		//allow for reset
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Astronaut.ResetState ();
-			Application.LoadLevel (Application.loadedLevel);
+			Application.LoadLevel ("Splash");
 		}
 	}
 
