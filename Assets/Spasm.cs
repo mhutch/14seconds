@@ -28,7 +28,7 @@ class Spasm : Disconnect
 	{
 		switch (Type) {
 		case SpasmType.Push:
-			Astronaut.Stretch (Limb, (Strength + Astronaut.StretchSpeed) * Time.deltaTime);
+			Astronaut.Stretch (Limb, (Strength + Astronaut.StartStretchSpeed) * Time.deltaTime);
 			break;
 		case SpasmType.Pull:
 			Astronaut.Stretch (Limb, - Strength * Time.deltaTime);
