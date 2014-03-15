@@ -13,8 +13,15 @@ static class Astronaut
 
 	static Astronaut ()
 	{
+		ResetState ();
+	}
+
+	public static void ResetState ()
+	{
 		OxygenTime = StartOxygenTime;
 		StretchSpeed = StartStretchSpeed;
+		stretchLeftArm = stretchLeftLeg = stretchRightArm = stretchRightLeg = 0f;
+		GripLeftArm = GripRightArm = false;
 	}
 
 	public static float StretchSpeed { get; set; }

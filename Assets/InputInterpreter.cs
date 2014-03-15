@@ -35,6 +35,12 @@ public class InputInterpreter : MonoBehaviour
 				disconnects.RemoveAt (i--);
 			}
 		}
+
+		//allow for reset
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Astronaut.ResetState ();
+			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 
 	void AddDisconnects ()

@@ -96,12 +96,6 @@ public class LimbController : MonoBehaviour
 				new Vector2(footOffStr.x, footOffStr.y), 
 				new Vector2(footOffEnd.x, footOffEnd.y), 
 				Astronaut.StretchRightLeg);
-		
-		//allow for reset		
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.LoadLevel(Application.loadedLevel);
-		}
 	}
 	
 	Vector2 ClosestGrabFromHand(GameObject hand)
