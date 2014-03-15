@@ -42,8 +42,8 @@ public class InputInterpreter : MonoBehaviour
 		if (Astronaut.OxygenTime > 0)
 			return;
 
-		//only allow 1 at once
-		if (disconnects.Count > 1)
+		//only allow 2 at once
+		if (disconnects.Count > 2)
 			return;
 
 		//glitch probability linearly scaled to 100% at 240 seconds
