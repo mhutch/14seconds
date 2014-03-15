@@ -124,7 +124,7 @@ public class LimbController : MonoBehaviour
 			
 			foreach(RaycastHit2D hit in hits)
 			{
-				if (hit.transform.tag != "Player" && hit.transform.tag != "PlayerPart") 
+				if (hit.transform.tag != "Player" && hit.transform.tag != "PlayerLimb") 
 				{
 					
 					if(closestHit == null ||
