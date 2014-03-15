@@ -54,16 +54,21 @@ public class InputInterpreter : MonoBehaviour
 		if (Astronaut.OxygenTime > 0)
 			return;
 
-		//only allow 2 at once
+		//only allow 3 at once
 		if (disconnects.Count > 2)
 			return;
 
-		//glitch probability linearly scaled to 100% at 240 seconds
+		//glitch probability linearly scaled to ~100% at 240 seconds
 		var glitchChance = (-Astronaut.OxygenTime / 240f) * Time.deltaTime;
 		if (Random.Range (0f, 1f) > glitchChance)
 			return;
 
-		Disconnect d = RandomDisconnect ();
+		Disconnect d;
+		if (disconnects.Any (a => !(a is Spasm))) {
+			d = Spasm.Random ();
+		} else {
+			d = RandomDisconnect ();
+		}
 		Debug.Log (d);
 		disconnects.Add (d);
 	}
