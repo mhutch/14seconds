@@ -11,7 +11,6 @@ public class InputInterpreter : MonoBehaviour
 	
 	void Start ()
 	{
-		disconnects.Add (new Delay (1, 10));
 	}
 	
 	void Update ()
