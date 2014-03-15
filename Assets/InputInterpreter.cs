@@ -74,4 +74,9 @@ public class InputInterpreter : MonoBehaviour
 		}
 		throw new Exception ();
 	}
+
+	void OnGUI ()
+	{
+		GUI.Label (new Rect (20, 20, 300, 50), string.Format ("Oxygen: {0:F2}", Astronaut.OxygenTime));
+	}
 }
