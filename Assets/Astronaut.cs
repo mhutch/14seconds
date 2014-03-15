@@ -122,25 +122,25 @@ static class Astronaut
 		OxygenTime -= value;
 	}
 
-	public static void Move (InputSet input, float scale)
+	public static void Move (InputSet input)
 	{
 		UpdateGrip (input, Limb.LeftArm);
 		UpdateGrip (input, Limb.RightArm);
-		UpdateStretch (input, Limb.LeftArm, scale);
-		UpdateStretch (input, Limb.LeftLeg, scale);
-		UpdateStretch (input, Limb.RightArm, scale);
-		UpdateStretch (input, Limb.RightLeg, scale);
+		UpdateStretch (input, Limb.LeftArm);
+		UpdateStretch (input, Limb.LeftLeg);
+		UpdateStretch (input, Limb.RightArm);
+		UpdateStretch (input, Limb.RightLeg);
 	}
 
 	static void UpdateGrip (InputSet input, Limb limb)
 	{
-		SetGrip (limb, input.GetStretch (limb));
+		SetGrip (limb, input.GetGrip (limb));
 	}
 
-	static void UpdateStretch (InputSet input, Limb limb, float scale)
+	static void UpdateStretch (InputSet input, Limb limb)
 	{
 		var keyDown = input.GetStretch (limb);
-		var stretch = scale * StretchSpeed * Time.deltaTime;
+		var stretch = StretchSpeed * Time.deltaTime;
 		RemoveOxygen (Astronaut.Stretch (limb, keyDown? stretch : -stretch));
 	}
 }

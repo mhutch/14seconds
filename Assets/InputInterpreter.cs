@@ -11,6 +11,7 @@ public class InputInterpreter : MonoBehaviour
 	
 	void Start ()
 	{
+		disconnects.Add (new Delay (1, 10));
 	}
 	
 	void Update ()
@@ -26,7 +27,7 @@ public class InputInterpreter : MonoBehaviour
 			handleInput &= !d.StealInput (input);
 
 		if (handleInput)
-			Astronaut.Move (input, 1f);
+			Astronaut.Move (input);
 
 		for (int i = 0; i < disconnects.Count; i++) {
 			if (!disconnects [i].CheckAndUpdate (input)) {
@@ -63,6 +64,8 @@ public class InputInterpreter : MonoBehaviour
 			return Spasm.Random ();
 		case 1:
 			return Slowdown.Random ();
+		case 2:
+			return Delay.Random ();
 		}
 		throw new Exception ();
 	}
