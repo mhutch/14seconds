@@ -9,11 +9,6 @@ public class AudioManager : MonoBehaviour
 	{
 		Instance = this;
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	}
 
 	public static AudioManager Instance { get; private set; }
 
@@ -21,5 +16,15 @@ public class AudioManager : MonoBehaviour
 	{
 		if (!audio.isPlaying)
 			audio.PlayOneShot (AudioClips [index]);
+	}
+
+	public static void PlayBreathing ()
+	{
+		Instance.PlaySound (7);
+	}
+
+	public static void PlayScream (int i)
+	{
+		Instance.PlaySound (i);
 	}
 }

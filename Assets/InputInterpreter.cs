@@ -69,6 +69,9 @@ public class InputInterpreter : MonoBehaviour
 		} else {
 			d = RandomDisconnect ();
 		}
+
+		AudioManager.PlayScream (Random.Range (0, 6));
+
 		Debug.Log (d);
 		disconnects.Add (d);
 	}
