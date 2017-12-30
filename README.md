@@ -39,7 +39,7 @@ AKA: _Gravity meets QWOP_, or _Space QWOP_.
 
 [Adriaan de Jongh](http://twitter.com/AdriaandeJongh)
 
-[Michael Hutchinson](http://twitter.com/mjhutchinson)
+[Mikayla Hutchinson](http://twitter.com/mjhutchinson)
 
 #### Art
 
