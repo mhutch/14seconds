@@ -3,6 +3,8 @@
 This is the game _14 Seconds_, made on a train from Chicago to
 San Francisco for [TrainJam](http://www.trainjam.com) 2014.
 
+Binaries are available [here](http://trainjam.com/?s=14+seconds&post_type=game).
+
 ### Description
 
 Disconnected, you have only 14 seconds to make it back to the
